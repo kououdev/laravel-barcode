@@ -1,59 +1,229 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Laravel Barcode Generator
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+A Laravel application for generating Code128 barcodes with HTML display and PNG download functionality.
 
-## About Laravel
+## Features
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+-   🔢 **Code128 Barcode Generation**: Generate barcodes using the Code128 standard
+-   🎨 **HTML Display**: View barcodes directly in the browser
+-   📥 **PNG Download**: Download generated barcodes as PNG images
+-   ✅ **Input Validation**: Validates text input (max 255 characters)
+-   📱 **Responsive Design**: Bootstrap 5 responsive interface
+-   🌙 **Dark Mode Support**: Beautiful UI with dark/light theme support
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Requirements
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+-   **PHP**: >= 8.1
+-   **Laravel**: >= 10.x
+-   **Composer**: Latest version
+-   **GD Extension**: Required for PNG image generation
 
-## Learning Laravel
+### PHP Extensions Required
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework. You can also check out [Laravel Learn](https://laravel.com/learn), where you will be guided through building a modern Laravel application.
+The application requires the following PHP extensions:
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+-   `gd` (for image processing)
+-   `mbstring` (for string handling)
 
-## Laravel Sponsors
+## Installation
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+### 1. Clone the Repository
 
-### Premium Partners
+```bash
+git clone <repository-url>
+cd laravel-barcode
+```
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+### 2. Install Dependencies
+
+```bash
+composer install
+```
+
+### 3. Install Barcode Package
+
+The application uses the `milon/barcode` package for barcode generation:
+
+```bash
+composer require milon/barcode
+```
+
+### 4. Environment Setup
+
+Copy the environment file and generate application key:
+
+```bash
+cp .env.example .env
+php artisan key:generate
+```
+
+### 5. Configure Database (Optional)
+
+If you plan to use database features, configure your database in `.env`:
+
+```env
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=laravel_barcode
+DB_USERNAME=your_username
+DB_PASSWORD=your_password
+```
+
+Then run migrations:
+
+```bash
+php artisan migrate
+```
+
+### 6. Install Frontend Dependencies (Optional)
+
+If you want to customize the frontend:
+
+```bash
+npm install
+npm run build
+```
+
+## Usage
+
+### 1. Start the Development Server
+
+```bash
+php artisan serve
+```
+
+The application will be available at `http://localhost:8000`
+
+### 2. Generate Barcodes
+
+1. Navigate to `/barcode-code128` or click "Barcode Generator" on the homepage
+2. Enter text in the textarea (max 255 characters)
+3. Click "Generate Barcode" to display the barcode
+4. Click "Download PNG" to download the barcode as an image
+
+### 3. Supported Formats
+
+-   **Display**: HTML format for web viewing
+-   **Download**: PNG format for offline use
+
+## API Routes
+
+| Method | Route                       | Description                     |
+| ------ | --------------------------- | ------------------------------- |
+| GET    | `/barcode-code128`          | Display barcode generation form |
+| POST   | `/barcode-code128`          | Generate and display barcode    |
+| POST   | `/barcode-code128/download` | Download barcode as PNG         |
+
+## Package Details
+
+### milon/barcode Package
+
+This application uses the `milon/barcode` package which provides:
+
+-   **Version**: ^12.0
+-   **Features**: Multiple barcode formats including Code128
+-   **Output Formats**: HTML, PNG, JPG, SVG
+-   **Documentation**: [GitHub Repository](https://github.com/milon/barcode)
+
+### Installation Command
+
+```bash
+composer require milon/barcode
+```
+
+## File Structure
+
+```
+app/
+├── Http/Controllers/
+│   └── BarcodeController.php    # Main barcode logic
+resources/
+├── views/
+│   ├── barcode/
+│   │   └── index.blade.php      # Barcode form and display
+│   └── welcome.blade.php        # Homepage with navigation
+routes/
+└── web.php                      # Application routes
+```
+
+## Configuration
+
+### Barcode Settings
+
+You can modify barcode generation parameters in `BarcodeController.php`:
+
+```php
+// HTML barcode generation
+$barcodeImage = $barcode->getBarcodeHTML($text, 'C128', 2, 50);
+
+// PNG barcode generation
+$barcodeImage = $barcode->getBarcodePNG($text, 'C128', 2, 50);
+```
+
+Parameters:
+
+-   `$text`: The text to encode
+-   `'C128'`: Barcode type (Code128)
+-   `2`: Width multiplier
+-   `50`: Height in pixels
+
+## Troubleshooting
+
+### Common Issues
+
+1. **GD Extension Missing**
+
+    ```bash
+    # Ubuntu/Debian
+    sudo apt-get install php-gd
+
+    # CentOS/RHEL
+    sudo yum install php-gd
+
+    # macOS (Homebrew)
+    brew install php-gd
+    ```
+
+2. **Composer Dependencies**
+
+    ```bash
+    composer install --no-dev --optimize-autoloader
+    ```
+
+3. **Permission Issues**
+    ```bash
+    chmod -R 755 storage bootstrap/cache
+    ```
+
+## Development
+
+### Running Tests
+
+```bash
+php artisan test
+```
+
+### Code Style
+
+```bash
+./vendor/bin/pint
+```
 
 ## Contributing
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+1. Fork the repository
+2. Create a feature branch
+3. Make your changes
+4. Run tests and code style checks
+5. Submit a pull request
 
 ## License
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+This project is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+## About Laravel
+
+Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects.
+
+For more information about Laravel, visit [https://laravel.com](https://laravel.com).
